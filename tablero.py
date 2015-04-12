@@ -26,7 +26,7 @@
 class Tablero:
  
     def __init__(self):
-        self.cuadricula = [[0] * 9] * 9
+        self.cuadricula = [[0 for i in range(9)] for j in range(9)]
         self.puntuacion = 0
         self.multiplicador = 0
         
@@ -35,24 +35,29 @@ class Tablero:
         
         if x < len(self.cuadricula) - 1:
             if self.cuadricula[x + 1][y] == color:
+                self.cuadricula[x][y] = 0
                 self.multiplicador = self.multiplicador + 1
                 self.romper(x + 1, y)
         if x > 0:
             if self.cuadricula[x - 1][y] == color:
+                self.cuadricula[x][y] = 0
                 self.multiplicador = self.multiplicador + 1
                 self.romper(x - 1, y)
         if y < len(self.cuadricula[0]) - 1:
             if self.cuadricula[x][y + 1] == color:
+                self.cuadricula[x][y] = 0
                 self.multiplicador = self.multiplicador + 1
                 self.romper(x, y + 1)
         if y > 0:
             if self.cuadricula[x][y - 1] == color:
+                self.cuadricula[x][y] = 0
                 self.multiplicador = self.multiplicador + 1
                 self.romper(x, y - 1)
+        if self.multiplicador > 1:
+            self.cuadricula[x][y] = 0
                 
     def movimiento(self, x, y):
         self.multiplicador = 1
         self.romper(x, y)
         if self.multiplicador > 1:
             self.puntuacion = self.puntuacion + (self.multiplicador * 5)
-        

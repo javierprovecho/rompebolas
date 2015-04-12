@@ -26,7 +26,7 @@
 from tablero import Tablero
 def main():
     tablero = Tablero()
-    mostrar_tablero(tablero, 0, 1)
+    mostrar_tablero(tablero, tablero.puntuacion, 1)
     
 def mostrar_tablero(tablero, puntuacion_actual, puntuacion_maxima):
     print \
