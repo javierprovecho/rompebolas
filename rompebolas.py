@@ -27,12 +27,24 @@ from tablero import Tablero
 def main():
     tablero = Tablero()
     mostrar_tablero(tablero, tablero.puntuacion, 1)
+    tablero.cuadricula[8][8] = 1
+    tablero.cuadricula[7][8] = 1
+    tablero.cuadricula[6][8] = 0
+    tablero.cuadricula[5][8] = 2
+    tablero.cuadricula[4][8] = 2
+    tablero.cuadricula[3][8] = 2
+    tablero.cuadricula[2][8] = 2
+    tablero.cuadricula[1][8] = 2
+    tablero.cuadricula[0][8] = 0
+    mostrar_tablero(tablero, tablero.puntuacion, 1)
+    tablero.limpiar()
+    mostrar_tablero(tablero, tablero.puntuacion, 1)
     
 def mostrar_tablero(tablero, puntuacion_actual, puntuacion_maxima):
     print \
         "\033[4m ",\
         "|",\
-        " ".join(str(i) for i in range(1, len(tablero.cuadricula[0]) + 1)),\
+        " ".join(str(c) for c in range(1, 10)),\
         "\033[0m",\
         "\t \033[4mpuntos\033[0m"
     
@@ -47,15 +59,15 @@ def mostrar_tablero(tablero, puntuacion_actual, puntuacion_maxima):
         return extra
             
     lineas = 0
-    for i in reversed(range(1, len(tablero.cuadricula) + 1)):
+    for f in reversed(range(1, 10)):
         lineas += 1
         extra = marcador(puntuacion_actual, puntuacion_maxima, lineas)
         
         print \
-            str(i),\
+            str(f),\
             "|",\
-            " ".join(str(tablero.cuadricula[i-1][j-1])\
-                for j in range(1, len(tablero.cuadricula[0]) + 1)),\
+            " ".join(str(tablero.cuadricula[f-1][c-1])\
+                for c in range(1, 10)),\
             "".join(extra)
 
 

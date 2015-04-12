@@ -56,8 +56,29 @@ class Tablero:
         if self.multiplicador > 1:
             self.cuadricula[x][y] = 0
                 
-    def movimiento(self, x, y):
+    def mover(self, x, y):
         self.multiplicador = 1
         self.romper(x, y)
         if self.multiplicador > 1:
             self.puntuacion = self.puntuacion + (self.multiplicador * 5)
+            
+    def limpiar(self):
+        for c in reversed(range(9)):
+            for f in reversed(range(8)):
+                if self.cuadricula[f][c] == 0:
+                    for k in range(f + 1, 9):
+                        self.cuadricula[k - 1][c] = self.cuadricula[k][c]
+                    self.cuadricula[8][c] = 0
+        
+        for c in reversed(range(9)):
+            columna_vacia = True
+            for f in reversed(range(9)):
+                if self.cuadricula[f][c] != 0:
+                    columna_vacia = False
+                    break
+            if columna_vacia:
+                for f in reversed(range(9)):
+                    del self.cuadricula[f][c]
+                    self.cuadricula[f].append(0)
+            
+            
