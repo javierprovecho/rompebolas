@@ -58,7 +58,7 @@ class Tablero:
                 
     def mover(self, x, y):
         self.multiplicador = 1
-        self.romper(x, y)
+        self.romper(x-1, y-1)
         if self.multiplicador > 1:
             self.puntuacion = self.puntuacion + (self.multiplicador * 5)
             
@@ -80,5 +80,11 @@ class Tablero:
                 for f in reversed(range(9)):
                     del self.cuadricula[f][c]
                     self.cuadricula[f].append(0)
-            
-            
+    
+    def vacio(self):
+        for f in range(9):
+            for c in range(9):
+                if self.cuadricula[f][c] !=  0:
+                    return False
+        return True
+                    

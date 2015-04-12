@@ -24,21 +24,69 @@
 # THE SOFTWARE.
 
 from tablero import Tablero
-def main():
+from random import randint
+
+def jugar():
+    tablero = menu_principal()
+    mostrar_tablero(tablero, tablero.puntuacion, -1)
+    while True:
+        tablero.mover(
+            int(raw_input("Introduzca la fila deseada:")),
+            int(raw_input("Introduzca la columna deseada:"))
+        )
+        tablero.limpiar()
+        mostrar_tablero(tablero, tablero.puntuacion, -1)
+        if tablero.vacio():
+            print "Partida terminada con", tablero.puntuacion, "puntos."
+            break
+    
+def menu_principal():
+    while True:
+        print\
+            "Elija tipo de tablero u otras opciones\n",\
+            "\t1. Fácil\n",\
+            "\t2. Intermedio\n",\
+            "\t3. Difícil\n",\
+            "\t4. Tablero fijo\n",\
+            "\t5. Mejores puntuaciones\n",\
+            "\t6. Borrar mejores puntuaciones\n",\
+            "\t0. Salir\n"
+        try:
+            opcion = int(raw_input())
+            if opcion <= 6 and opcion >= 0:
+                break
+            else:
+                raise
+        except:
+            print "Error: Seleccione una opcion válida"
+    
     tablero = Tablero()
-    mostrar_tablero(tablero, tablero.puntuacion, 1)
-    tablero.cuadricula[8][8] = 1
-    tablero.cuadricula[7][8] = 1
-    tablero.cuadricula[6][8] = 0
-    tablero.cuadricula[5][8] = 2
-    tablero.cuadricula[4][8] = 2
-    tablero.cuadricula[3][8] = 2
-    tablero.cuadricula[2][8] = 2
-    tablero.cuadricula[1][8] = 2
-    tablero.cuadricula[0][8] = 0
-    mostrar_tablero(tablero, tablero.puntuacion, 1)
-    tablero.limpiar()
-    mostrar_tablero(tablero, tablero.puntuacion, 1)
+    if opcion == 1:
+        tablero_facil(tablero)
+    elif opcion == 2:
+        tablero_intermedio(tablero)
+    elif opcion == 3:
+        tablero_dificil(tablero)
+    elif opcion == 0:
+        exit()
+        
+    return tablero
+    
+    
+def tablero_facil(tablero):
+    for f in range(9):
+        for c in range(9):
+            tablero.cuadricula[f][c] = randint(1, 3)
+            
+def tablero_intermedio(tablero):
+    for f in range(9):
+        for c in range(9):
+            tablero.cuadricula[f][c] = randint(1, 4)
+            
+def tablero_dificil(tablero):
+    for f in range(9):
+        for c in range(9):
+            tablero.cuadricula[f][c] = randint(1, 5)
     
 def mostrar_tablero(tablero, puntuacion_actual, puntuacion_maxima):
     print \
@@ -70,5 +118,5 @@ def mostrar_tablero(tablero, puntuacion_actual, puntuacion_maxima):
                 for c in range(1, 10)),\
             "".join(extra)
 
-
-main()
+if __name__ == "__main__":
+    jugar()
