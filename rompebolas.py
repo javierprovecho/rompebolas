@@ -31,8 +31,8 @@ def jugar():
     mostrar_tablero(tablero, tablero.puntuacion, -1)
     while True:
         tablero.mover(
-            int(raw_input("Introduzca la fila deseada:")),
-            int(raw_input("Introduzca la columna deseada:"))
+            int(raw_input("Introduzca la fila deseada: ")),
+            int(raw_input("Introduzca la columna deseada: "))
         )
         tablero.limpiar()
         mostrar_tablero(tablero, tablero.puntuacion, -1)
@@ -48,12 +48,12 @@ def menu_principal():
             "\t2. Intermedio\n",\
             "\t3. Difícil\n",\
             "\t4. Tablero fijo\n",\
-            "\t5. Mejores puntuaciones\n",\
-            "\t6. Borrar mejores puntuaciones\n",\
+            "\t5. Mejores puntuaciones (no implementado)\n",\
+            "\t6. Borrar mejores puntuaciones (no implementado)\n",\
             "\t0. Salir\n"
         try:
             opcion = int(raw_input())
-            if opcion <= 6 and opcion >= 0:
+            if opcion <= 4 and opcion >= 0:
                 break
             else:
                 raise
@@ -67,11 +67,36 @@ def menu_principal():
         tablero_intermedio(tablero)
     elif opcion == 3:
         tablero_dificil(tablero)
+    elif opcion == 4:
+        menu_secundario(tablero)
     elif opcion == 0:
         exit()
         
     return tablero
+
+def menu_secundario(tablero):
+    while True:
+        print\
+            "Elija un tablero fijo\n",\
+            "\t1. Cuadrado con tres colores\n",\
+            "\t2. Rombo con 4 colores\n",\
+            "\t3. Casi-damero, con dos colores\n",\
+            "\t0. Volver (no implementado)\n"
+        try:
+            opcion = int(raw_input())
+            if opcion <= 3 and opcion >= 1:
+                break
+            else:
+                raise
+        except:
+            print "Error: Seleccione una opcion válida"
     
+    if opcion == 1:
+        tablero_cuadrado_tres_colores(tablero)
+    elif opcion == 2:
+        tablero_rombo_cuatro_colores(tablero)
+    elif opcion == 3:
+        tablero_casi_damero_dos_colores(tablero)
     
 def tablero_facil(tablero):
     for f in range(9):
@@ -87,6 +112,51 @@ def tablero_dificil(tablero):
     for f in range(9):
         for c in range(9):
             tablero.cuadricula[f][c] = randint(1, 5)
+            
+def tablero_cuadrado_tres_colores(tablero):
+    tablero.cuadricula = [
+        [1, 1, 1, 1, 1, 1, 1, 1, 1],
+        [1, 2, 2, 2, 2, 2, 2, 2, 1],
+        [1, 2, 3, 3, 3, 3, 3, 2, 1],
+        [1, 2, 3, 1, 1, 1, 3, 2, 1],
+        [1, 2, 3, 1, 2, 1, 3, 2, 1],
+        [1, 2, 3, 1, 1, 1, 3, 2, 1],
+        [1, 2, 3, 3, 3, 3, 3, 2, 1],
+        [1, 2, 2, 2, 2, 2, 2, 2, 1],
+        [1, 1, 1, 1, 1, 1, 1, 1, 1],
+    ]
+    
+def tablero_rombo_cuatro_colores(tablero):
+    tablero.cuadricula = [
+        [4, 4, 4, 4, 1, 4, 4, 4, 4],
+        [4, 4, 4, 1, 2, 1, 4, 4, 4],
+        [4, 4, 1, 2, 3, 2, 1, 4, 4],
+        [4, 1, 2, 3, 1, 3, 2, 1, 4],
+        [1, 2, 3, 1, 2, 1, 3, 2, 1],
+        [4, 1, 2, 3, 1, 3, 2, 1, 4],
+        [4, 4, 1, 2, 3, 2, 1, 4, 4],
+        [4, 4, 4, 1, 2, 1, 4, 4, 4],
+        [4, 4, 4, 4, 1, 4, 4, 4, 4],
+    ]
+    
+def tablero_casi_damero_dos_colores(tablero):
+    tablero.cuadricula = [
+        [1, 2, 1, 2, 1, 2, 1, 2, 1],
+        [2, 1, 2, 1, 2, 1, 2, 1, 2],
+        [1, 2, 1, 2, 1, 2, 1, 2, 1],
+        [2, 1, 2, 1, 2, 1, 2, 1, 2],
+        [1, 2, 1, 2, 1, 2, 1, 2, 1],
+        [2, 1, 2, 1, 2, 1, 2, 1, 2],
+        [1, 2, 1, 2, 1, 2, 1, 2, 1],
+        [2, 1, 2, 1, 2, 1, 2, 1, 2],
+        [1, 2, 1, 2, 1, 2, 1, 2, 1],
+    ]
+    f = randint(0, 8)
+    c = randint(0, 8)
+    if tablero.cuadricula[f][c] == 1:
+        tablero.cuadricula[f][c] = 2
+    else:
+        tablero.cuadricula[f][c] = 1
     
 def mostrar_tablero(tablero, puntuacion_actual, puntuacion_maxima):
     print \
