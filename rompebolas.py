@@ -57,4 +57,6 @@ def mostrar_tablero(tablero, puntuacion_actual, puntuacion_maxima):
             " ".join(str(tablero.cuadricula[i-1][j-1])\
                 for j in range(1, len(tablero.cuadricula[0]) + 1)),\
             "".join(extra)
+
+
 main()
