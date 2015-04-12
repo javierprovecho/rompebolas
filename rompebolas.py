@@ -114,7 +114,9 @@ def mostrar_tablero(tablero, puntuacion_actual, puntuacion_maxima):
         print \
             str(f),\
             "|",\
-            " ".join(str(tablero.cuadricula[f-1][c-1])\
+            " ".join(str(tablero.cuadricula[f-1][c-1]\
+                if tablero.cuadricula[f-1][c-1] > 0 else " "\
+            )\
                 for c in range(1, 10)),\
             "".join(extra)
 
