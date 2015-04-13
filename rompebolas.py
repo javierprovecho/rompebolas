@@ -25,6 +25,7 @@
 
 from tablero import Tablero
 from random import randint
+import json
 
 def jugar():
     tablero = menu_principal()
@@ -69,6 +70,12 @@ def jugar():
                 tablero_intermedio(tablero)
             elif tablero.tipo_partida == 3:
                 tablero_dificil(tablero)
+            elif tablero.tipo_partida == 41:
+                tablero_cuadrado_tres_colores(tablero)
+            elif tablero.tipo_partida == 42:
+                tablero_rombo_cuatro_colores(tablero)
+            elif tablero.tipo_partida == 43:
+                tablero_casi_damero_dos_colores(tablero)
         elif opcion == 0:
             tablero = menu_principal()
     
@@ -86,7 +93,7 @@ def menu_principal():
                 "\t0. Salir\n"
             try:
                 opcion = int(raw_input())
-                if opcion <= 4 and opcion >= 0:
+                if opcion <= 6 and opcion >= 0:
                     break
                 else:
                     raise
@@ -110,6 +117,10 @@ def menu_principal():
             menu_secundario(tablero)
             if tablero is not None:
                 break
+        elif opcion == 5:
+            mejores_puntuaciones()
+        elif opcion == 6:
+            borrar_mejores_puntuaciones()
         elif opcion == 0:
             exit()
         
@@ -139,6 +150,60 @@ def menu_secundario(tablero):
     elif opcion == 3:
         tablero_casi_damero_dos_colores(tablero)
     
+def mejores_puntuaciones():
+    try:
+        f = open("fichero.txt")
+        puntuaciones = json.loads(f.read())
+        f.close()
+        print\
+            "Mejores puntuaciones\n",\
+            "\t1. Tablero fácil :\t", puntuaciones[0], "\n",\
+            "\t2. Tablero intermedio :\t", puntuaciones[1], "\n",\
+            "\t3. Tablero difícil :\t", puntuaciones[2], "\n",\
+            "\t4. Tablero fijo cuadrado :\t", puntuaciones[3], "\n",\
+            "\t5. Tablero fijo rombo :\t", puntuaciones[4], "\n",\
+            "\t6. Tablero fijo damero :\t", puntuaciones[5], "\n"
+    except:
+        print "No hay puntuaciones previas"
+
+def borrar_mejores_puntuaciones():
+    try:
+        f = open("fichero.txt")
+        puntuaciones = json.loads(f.read())
+        f.close()
+        for p in range(6):
+            puntuaciones[p] = 0
+        f = open("puntuaciones.txt", "w")
+        f.write(json.dumps(puntuaciones))
+        f.close()
+    except:
+        print "No hay puntuaciones previas"
+        puntuaciones = []
+        for p in range(6):
+            puntuaciones.append(0)
+        f = open("puntuaciones.txt", "w")
+        f.write(json.dumps(puntuaciones))
+        f.close()
+
+def anadir_puntuacion(tipo_partida, puntuacion):
+    try:
+        f = open("fichero.txt")
+        puntuaciones = json.loads(f.read())
+        f.close()
+        for p in range(6):
+            puntuaciones[p] = 0
+        f = open("puntuaciones.txt", "w")
+        f.write(json.dumps(puntuaciones))
+        f.close()
+    except:
+        print "No hay puntuaciones previas"
+        puntuaciones = []
+        for p in range(6):
+            puntuaciones.append(0)
+        f = open("puntuaciones.txt", "w")
+        f.write(json.dumps(puntuaciones))
+        f.close()
+
 def tablero_facil(tablero):
     for f in range(9):
         for c in range(9):
