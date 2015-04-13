@@ -28,49 +28,90 @@ from random import randint
 
 def jugar():
     tablero = menu_principal()
-    mostrar_tablero(tablero, tablero.puntuacion, -1)
     while True:
-        tablero.mover(
-            int(raw_input("Introduzca la fila deseada: ")),
-            int(raw_input("Introduzca la columna deseada: "))
-        )
-        tablero.limpiar()
         mostrar_tablero(tablero, tablero.puntuacion, -1)
-        if tablero.vacio():
-            print "Partida terminada con", tablero.puntuacion, "puntos."
-            break
+        while True:
+            try:
+                f, c =\
+                    int(raw_input("Introduzca la fila deseada: ")),\
+                    int(raw_input("Introduzca la columna deseada: "))
+                if f <= 9 and f >= 1 and c <= 9 and c >= 1:
+                    tablero.mover(f, c)
+                    tablero.limpiar()
+                    mostrar_tablero(tablero, tablero.puntuacion, -1)
+                    if tablero.vacio():
+                        print "Partida terminada con", tablero.puntuacion, "puntos."
+                        break
+                elif f == 0 and c == 0:
+                    break
+                else:
+                    raise
+            except:
+                print "Error: Seleccione una posición válida"
+        while True:
+            print\
+                "Elija una opción\n",\
+                "\t1. Jugar de nuevo\n",\
+                "\t0. Volver al menú principal\n"
+            try:
+                opcion = int(raw_input())
+                if opcion <= 1 and opcion >= 0:
+                    break
+                else:
+                    raise
+            except:
+                print "Error: Seleccione una opcion válida"
+        if opcion == 1:
+            tablero.puntuacion = 0
+            if tablero.tipo_partida == 1:
+                tablero_facil(tablero)
+            elif tablero.tipo_partida == 2:
+                tablero_intermedio(tablero)
+            elif tablero.tipo_partida == 3:
+                tablero_dificil(tablero)
+        elif opcion == 0:
+            tablero = menu_principal()
     
 def menu_principal():
     while True:
-        print\
-            "Elija tipo de tablero u otras opciones\n",\
-            "\t1. Fácil\n",\
-            "\t2. Intermedio\n",\
-            "\t3. Difícil\n",\
-            "\t4. Tablero fijo\n",\
-            "\t5. Mejores puntuaciones (no implementado)\n",\
-            "\t6. Borrar mejores puntuaciones (no implementado)\n",\
-            "\t0. Salir\n"
-        try:
-            opcion = int(raw_input())
-            if opcion <= 4 and opcion >= 0:
+        while True:
+            print\
+                "Elija tipo de tablero u otras opciones\n",\
+                "\t1. Fácil\n",\
+                "\t2. Intermedio\n",\
+                "\t3. Difícil\n",\
+                "\t4. Tablero fijo\n",\
+                "\t5. Mejores puntuaciones (no implementado)\n",\
+                "\t6. Borrar mejores puntuaciones (no implementado)\n",\
+                "\t0. Salir\n"
+            try:
+                opcion = int(raw_input())
+                if opcion <= 4 and opcion >= 0:
+                    break
+                else:
+                    raise
+            except:
+                print "Error: Seleccione una opcion válida"
+        
+        tablero = Tablero()
+        if opcion == 1:
+            tablero_facil(tablero)
+            tablero.tipo_partida = 1
+            break
+        elif opcion == 2:
+            tablero_intermedio(tablero)
+            tablero.tipo_partida = 2
+            break
+        elif opcion == 3:
+            tablero_dificil(tablero)
+            tablero.tipo_partida = 3
+            break
+        elif opcion == 4:
+            menu_secundario(tablero)
+            if tablero is not None:
                 break
-            else:
-                raise
-        except:
-            print "Error: Seleccione una opcion válida"
-    
-    tablero = Tablero()
-    if opcion == 1:
-        tablero_facil(tablero)
-    elif opcion == 2:
-        tablero_intermedio(tablero)
-    elif opcion == 3:
-        tablero_dificil(tablero)
-    elif opcion == 4:
-        menu_secundario(tablero)
-    elif opcion == 0:
-        exit()
+        elif opcion == 0:
+            exit()
         
     return tablero
 

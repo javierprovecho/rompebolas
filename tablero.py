@@ -29,6 +29,7 @@ class Tablero:
         self.cuadricula = [[0 for i in range(9)] for j in range(9)]
         self.puntuacion = 0
         self.multiplicador = 0
+        self.tipo_partida = 0
         
     def romper(self, x, y):
         color = self.cuadricula[x][y]
@@ -58,9 +59,21 @@ class Tablero:
                 
     def mover(self, x, y):
         self.multiplicador = 1
+#        total_bolas =  self.total_bolas()
         self.romper(x-1, y-1)
         if self.multiplicador > 1:
-            self.puntuacion = self.puntuacion + (self.multiplicador * 5)
+            self.puntuacion = self.puntuacion + (self.multiplicador * 5)\
+                * self.multiplicador
+#            self.puntuacion = self.puntuacion +\
+#                (self.multiplicador * 5) / total_bolas
+    
+#    def total_bolas(self):
+#        total_bolas = 0
+#        for f in self.cuadricula:
+#            for c in f:
+#                if c > 0:
+#                    total_bolas =  total_bolas + 1
+#        return total_bolas
             
     def limpiar(self):
         for c in reversed(range(9)):
