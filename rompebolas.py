@@ -79,6 +79,7 @@ def jugar():
                 tablero_casi_damero_dos_colores(tablero)
         elif opcion == 0:
             anadir_puntuacion(tablero.tipo_partida, tablero.puntuacion)
+            print "Partida terminada con", tablero.puntuacion, "puntos."
             tablero = menu_principal()
     
 def menu_principal():
@@ -147,10 +148,13 @@ def menu_secundario(tablero):
     
     if opcion == 1:
         tablero_cuadrado_tres_colores(tablero)
+        tablero.tipo_partida = 41
     elif opcion == 2:
         tablero_rombo_cuatro_colores(tablero)
+        tablero.tipo_partida = 42
     elif opcion == 3:
         tablero_casi_damero_dos_colores(tablero)
+        tablero.tipo_partida = 43
     
 def mejores_puntuaciones():
     try:
@@ -188,11 +192,10 @@ def anadir_puntuacion(tipo_partida, puntuacion):
         f.close()
         if puntuaciones.get(str(tipo_partida)) < puntuacion:
             puntuaciones[str(tipo_partida)] = puntuacion
-            f = open("puntuaciones.txt", "w")
+            f = open("puntuaciones.json", "w")
             f.write(json.dumps(puntuaciones))
             f.close()
     except:
-        borrar_mejores_puntuaciones()
         puntuaciones = {
             1:  0,
             2:  0,
@@ -202,7 +205,7 @@ def anadir_puntuacion(tipo_partida, puntuacion):
             43: 0
         }
         puntuaciones[str(tipo_partida)] = puntuacion
-        f = open("puntuaciones.txt", "w")
+        f = open("puntuaciones.json", "w")
         f.write(json.dumps(puntuaciones))
         f.close()
 
